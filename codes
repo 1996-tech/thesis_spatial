@@ -1,0 +1,109 @@
+zz<-read.csv("pca_aod1.csv", header = TRUE)
+head(zz)
+rownames(zz)<-c(zz$Location)
+head(zz)
+
+require(stats)
+pc<-prcomp(x=zz[,-1], center = TRUE, scale. = FALSE)
+print(pc)
+summary(pc)
+
+install.packages("devtools")
+require(ggbiplot) 
+install.packages("ggbiplot")
+install.packages("remotes")
+remotes::install_github("vqv/ggbiplot")
+ggbiplot(pc)
+biplot = ggbiplot(pcobj = pc,
+                  choices = c(1,2),
+                                                # Scaling of axis
+                  labels = row.names(zz),     # Add labels as rownames
+                  labels.size =3,
+                  varname.size = 2),
+                  varname.abbrev = TRUE,  # Abbreviate variable names (TRUE)
+                  var.axes = FALSE),circle = TRUE)      # Remove variable vectors (TRUE)
+                                    # Add unit variance circle (TRUE)
+                  # Adding ellipses
+print(biplot)
+
+
+
+print(biplot)
+
+
+
+bip=AddCluster2Biplot(bip, ClusterType="us", Groups=zz$Location)
+plot(bip, mode="a", margin=0.1, PlotClus=TRUE)
+
+library(ggfortify)
+df <- zz[,-1]
+pca_res <- prcomp(df, scale. = FALSE)
+summary(pca_res)
+
+autoplot(pca_res, label= TRUE, label.size=2.5)
+p<-autoplot(pca_res, data = zz, loadings = TRUE, label=TRUE, label.size=4, loadings.label=TRUE,loadings.label.size=3, loadings.colour = '#009999',loadings.label.colour="#009999",xlim=c(-0.75,0.750),ylim=c(-.75,0.75))
+p+theme_bw()
+p<-autoplot(pca_res, data = zz, loadings = TRUE, loadings.label=TRUE,loadings.label.size=3, loadings.colour = 'grey',loadings.label.colour="grey", label=TRUE, label.size=4,xlim=c(-0.75,0.750),ylim=c(-.75,0.75))
+
+
+autoplot(kmeans(zz[,-1], 3), data = zz, label=TRUE,label.size= 4, loadings=TRUE, loadings.label=TRUE,loadings.label.size=3, loadings.colour = 'grey',loadings.label.colour="grey", xlim=c(-0.75,0.750),ylim=c(-.75,0.75))+theme_bw()
+autoplot(fanny(zz[,-1], 3), frame = TRUE, frame.type = 'norm',label=TRUE,label.size= 3, loadings=TRUE, loadings.label=TRUE,loadings.label.size=3, loadings.colour = 'black',loadings.label.colour="black")
+kk<-kmeans(df, 3, nstart = 25)
+
+FcM<- fcm(zz[,-1], centers = 6)
+MM<-as.data.frame(FcM$u)[1:10,]
+write.csv(MM,"fcmpm2.5.csv")
+summary(FcM)
+write.csv(MM,"fcm_pm.csv")
+
+
+
+df<-read.csv("PCA2.csv")
+rownames(df)<- c(df$Location)
+head(df)
+newdata<- df[,-1]
+newdata
+df<- scale(newdata)
+require(stats)
+res.dist<- dist(x=df, method = "euclidean")
+x<- as.matrix(res.dist)[1:10,1:10]
+x
+round(x, digits = 3)
+res.hc<-hclust(d=res.dist, method = "complete")
+plot(x=res.hc,cex=.8, lwd=1)
+rect.hclust(res.hc,k=2, border = 2:6)
+
+require(factoextra)
+fviz_dend(x=res.hc, cex=.8, lwd=.8, k=2)
+require(grDevices)
+
+colors()
+
+
+dm<-dist(results) 
+hc<-hclust(dm, method="complete") # simple dendrogram
+plot(hc, hang=-1) 
+rect.hclust(hc, k=5, border="red")
+
+require(stats)
+res.dist<- dist(x=df, method = "euclidean")
+x<- as.matrix(res.dist)[1:6,1:6]
+x
+
+round(x, digits = 3)
+res.hc<-hclust(d=res.dist, method = "complete")
+plot(x=res.hc)
+require(factoextra)
+fviz_dend(x=res.hc, cex=.8, lwd=.8, k=4, k_colors = "red","green","blue", "magenta")
+require(grDevices)
+colors()
+
+
+
+
+library(cluster)
+
+
+
+
+library(ppclust)
